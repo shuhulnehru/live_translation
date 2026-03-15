@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Dubbing Studio</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Video Dubbing Studio</h1>
+      <p class="subtitle">Upload a video, pick languages, and get a fully dubbed version powered by AI.</p>
+    </header>
+
+    <!-- Step 1: Upload & Config -->
+    <section id="upload-section" class="card">
+      <h2>1. Upload Video</h2>
+      <div class="upload-area" id="drop-zone">
+        <input type="file" id="file-input" accept="video/*" hidden />
+        <div class="upload-content">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <p>Drag & drop a video file or <span class="link">browse</span></p>
+          <p class="hint">MP4, MKV, AVI, WebM supported</p>
+        </div>
+      </div>
+      <p id="file-name" class="file-name"></p>
+
+      <h2>2. Choose Languages</h2>
+      <div class="lang-row">
+        <div class="lang-group">
+          <label for="source-lang">Source Language</label>
+          <select id="source-lang">
+            <option value="auto" selected>Auto Detect</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+            <option value="zh">Chinese</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+          </select>
+        </div>
+        <div class="arrow">&#10132;</div>
+        <div class="lang-group">
+          <label for="target-lang">Target Language</label>
+          <select id="target-lang">
+            <option value="hi" selected>Hindi</option>
+            <option value="en">English</option>
+            <option value="ta">Tamil</option>
+            <option value="te">Telugu</option>
+            <option value="bn">Bengali</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+            <option value="zh-CN">Chinese (Simplified)</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="start-btn" class="btn primary" disabled>Start Dubbing</button>
+    </section>
+
+    <!-- Step 2: Processing -->
+    <section id="processing-section" class="card" hidden>
+      <h2>Processing Your Video</h2>
+
+      <div class="steps">
+        <div class="step" id="step-extracting">
+          <div class="step-icon">1</div>
+          <div class="step-label">Extract Audio &amp; Keyframes</div>
+        </div>
+        <div class="step" id="step-transcribing">
+          <div class="step-icon">2</div>
+          <div class="step-label">Transcribe Speech</div>
+        </div>
+        <div class="step" id="step-translating">
+          <div class="step-icon">3</div>
+          <div class="step-label">Translate with Context</div>
+        </div>
+        <div class="step" id="step-synthesizing">
+          <div class="step-icon">4</div>
+          <div class="step-label">Generate Dubbed Speech</div>
+        </div>
+        <div class="step" id="step-building">
+          <div class="step-icon">5</div>
+          <div class="step-label">Build Final Video</div>
+        </div>
+      </div>
+
+      <p id="status-text" class="status-text">Starting...</p>
+
+      <div id="transcript-area" hidden>
+        <h3>Transcript</h3>
+        <div id="transcript-list" class="transcript-list"></div>
+      </div>
+    </section>
+
+    <!-- Step 3: Result -->
+    <section id="result-section" class="card" hidden>
+      <h2>Your Dubbed Video is Ready!</h2>
+      <div class="player-wrap">
+        <video id="video-player" controls></video>
+      </div>
+      <div class="result-actions">
+        <button id="play-btn" class="btn primary">Play Dubbed Video</button>
+        <a id="download-link" class="btn secondary" download>Download MP4</a>
+      </div>
+    </section>
+
+    <!-- Error -->
+    <section id="error-section" class="card" hidden>
+      <h2>Something went wrong</h2>
+      <p id="error-text" class="error-text"></p>
+      <button id="retry-btn" class="btn primary" onclick="location.reload()">Try Again</button>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
