@@ -29,7 +29,9 @@ async def build_dubbed_audio(
     TTS clip at its start_time.
     """
     if not clips:
-        raise ValueError("No TTS clips to assemble")
+        raise ValueError(
+            "No TTS clips to assemble. Upstream pipeline produced no audio segments (check transcription/segments)."
+        )
 
     valid_clips = [c for c in clips if os.path.exists(c.path) and c.path]
     if not valid_clips:

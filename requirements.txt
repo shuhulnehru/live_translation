@@ -7,3 +7,9 @@ ffmpeg-python==0.2.0
 python-multipart==0.0.18
 pyyaml>=6.0
 aiofiles==24.1.0
+langgraph>=0.2.0
+langchain-openai>=0.2.0
+langchain-core>=0.3.0
+langgraph>=0.2.0
+langchain-openai>=0.2.0
+langchain-core>=0.3.0

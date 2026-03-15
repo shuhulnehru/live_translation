@@ -53,25 +53,17 @@ def _estimate_rate_pct(text: str, target_duration: float, lang: str) -> int:
     return max(50, min(200, rate_pct))
 
 
-def _build_ssml(text: str, voice: str, rate_pct: int) -> str:
-    """Build SSML with prosody rate control and basic emotion pitch."""
+def _build_prosody(rate_pct: int, text: str) -> tuple[str, str]:
+    """Return edge-tts rate/pitch strings."""
     pitch = "+0Hz"
     if text.rstrip().endswith("?"):
-        pitch = "+10%"
+        pitch = "+10Hz"
     elif text.rstrip().endswith("!"):
-        pitch = "+5%"
+        pitch = "+5Hz"
 
     sign = "+" if rate_pct >= 100 else ""
-    rate_str = f"{sign}{rate_pct - 100}%"
-
-    escaped = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-    return (
-        '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">'
-        f'<voice name="{voice}">'
-        f'<prosody rate="{rate_str}" pitch="{pitch}">'
-        f"{escaped}"
-        "</prosody></voice></speak>"
-    )
+    rate = f"{sign}{rate_pct - 100}%"
+    return rate, pitch
 
 
 async def synthesize_speech(
@@ -95,8 +87,8 @@ async def synthesize_speech(
     if target_duration and target_duration > 0:
         rate_pct = _estimate_rate_pct(text, target_duration, target_lang)
         if abs(rate_pct - 100) > 10:
-            ssml = _build_ssml(text, voice, rate_pct)
-            communicate = edge_tts.Communicate(ssml, voice)
+            rate, pitch = _build_prosody(rate_pct, text)
+            communicate = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
             await communicate.save(output_path)
             return output_path
 

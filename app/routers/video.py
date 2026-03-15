@@ -9,7 +9,7 @@ import aiofiles
 from fastapi import APIRouter, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 
-from ..services.pipeline import run_dubbing_pipeline
+from ..services.pipeline import NoSpeechSegmentsError, run_dubbing_pipeline
 
 logger = logging.getLogger(__name__)
 
@@ -101,6 +101,12 @@ async def dub_websocket(websocket: WebSocket, job_id: str) -> None:
 
     except WebSocketDisconnect:
         logger.info("Client disconnected from dub session %s", job_id)
+    except NoSpeechSegmentsError as exc:
+        logger.warning("No speech found for job %s: %s", job_id, exc)
+        try:
+            await websocket.send_json({"type": "error", "message": str(exc)})
+        except Exception:
+            pass
     except Exception:
         logger.exception("WebSocket error for job %s", job_id)
         try:

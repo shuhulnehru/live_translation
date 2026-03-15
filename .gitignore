@@ -11,9 +11,16 @@ env/
 # Secrets
 secrets.yaml
 
-# Uploads & temp
+# Uploads, outputs & temp
 uploads/
+outputs/
 *.tmp
+
+# Video / dubbed output
+*.mp4
+*.webm
+*.mkv
+*.m4a
 
 # IDE
 .idea/
