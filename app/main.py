@@ -3,6 +3,7 @@ import os
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
+from .api import media_router
 from .config import get_settings
 from .routers import items_router, video_router
 
@@ -13,6 +14,7 @@ def create_app() -> FastAPI:
 
     app.include_router(items_router)
     app.include_router(video_router)
+    app.include_router(media_router)
 
     static_dir = os.path.join(os.path.dirname(__file__), "static")
     os.makedirs(static_dir, exist_ok=True)

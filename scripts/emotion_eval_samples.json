@@ -1,0 +1,24 @@
+{
+  "samples": [
+    {
+      "prompt_text": "I am so excited for today, this is amazing!",
+      "expected_emotion": "happy"
+    },
+    {
+      "prompt_text": "Everything feels heavy and I just want to cry.",
+      "expected_emotion": "sad"
+    },
+    {
+      "prompt_text": "Why did you do that? I am really angry right now.",
+      "expected_emotion": "angry"
+    },
+    {
+      "prompt_text": "Take a deep breath and relax, it will be okay.",
+      "expected_emotion": "calm"
+    },
+    {
+      "prompt_text": "The package has been shipped and will arrive tomorrow.",
+      "expected_emotion": "neutral"
+    }
+  ]
+}
